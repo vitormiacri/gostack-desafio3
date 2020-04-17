@@ -24,8 +24,15 @@ export default function App() {
   }, []);
 
   function handleLikeRepository(id) {
-    api.post(`repositories/${id}/like`).then(() => {
-      loadRepositories();
+    api.post(`repositories/${id}/like`).then((response) => {
+      const repository = response.data;
+      const repositoryIndex = repositories.findIndex(
+        (repository) => repository.id === id
+      );
+
+      repositories[repositoryIndex] = repository;
+
+      setRepositories([...repositories]);
     });
   }
 
